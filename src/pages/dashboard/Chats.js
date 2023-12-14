@@ -60,7 +60,7 @@ const ChatElement = ({ id, name, img, msg, time, unread, online }) => {
         backgroundColor:
           theme.palette.mode === "light"
             ? "#fff"
-            : theme.palette.background.default,
+            : theme.palette.background.paper,
       }}
       p={2}
     >
@@ -138,7 +138,7 @@ const Chats = () => {
         backgroundColor:
           theme.palette.mode === "light"
             ? "#f8faff"
-            : theme.palette.background.paper,
+            : theme.palette.background.default,
         boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
       }}
     >
