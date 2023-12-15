@@ -13,7 +13,7 @@ import {
 // data const
 import { Chat_History } from "../../data";
 
-const Message = () => {
+const Message = ({ menu }) => {
   return (
     <Box p={3}>
       <Stack spacing={3}>
@@ -21,24 +21,24 @@ const Message = () => {
           switch (el.type) {
             case "divider":
               // Timeline
-              return <Timeline el={el} />;
+              return <Timeline el={el} menu={menu} />;
             case "msg":
               switch (el.subtype) {
                 case "img":
                   // img msg
-                  return <MediaMsg el={el} />;
+                  return <MediaMsg el={el} menu={menu} />;
                 case "doc":
                   // Doc msg
-                  return <DocMsg el={el} />;
+                  return <DocMsg el={el} menu={menu} />;
                 case "link":
                   // Link msg
-                  return <LinkMsg el={el} />;
+                  return <LinkMsg el={el} menu={menu} />;
                 case "reply":
                   // Reply msg
-                  return <ReplyMsg el={el} />;
+                  return <ReplyMsg el={el} menu={menu} />;
                 default:
                   // Text msg
-                  return <TextMsg el={el} />;
+                  return <TextMsg el={el} menu={menu} />;
               }
             default:
               return <></>;

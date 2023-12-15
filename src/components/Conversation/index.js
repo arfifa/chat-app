@@ -14,7 +14,7 @@ const Conversation = () => {
       {/* Msg  */}
       <Box width sx={{ flexGrow: 1, height: "100%" }}>
         <SimpleBarStyle timeout={500} clickOnTrack={false}>
-          <Message />
+          <Message menu={true} />
         </SimpleBarStyle>
       </Box>
       {/* Chat Footer  */}
