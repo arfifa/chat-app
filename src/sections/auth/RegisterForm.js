@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
-import { Link as RouterLink } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Alert,
   Button,
   IconButton,
   InputAdornment,
-  Link,
   Stack,
 } from "@mui/material";
 import { Eye, EyeSlash } from "phosphor-react";
-// custom component
+// // custom component
 import FormProvider from "../../components/hook-form/FormProvider";
 import { RHFTextField } from "../../components/hook-form";
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
+    firstName: Yup.string().required("First Name is required"),
+    lastName: Yup.string().required("Last Name is required"),
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
@@ -27,6 +27,8 @@ const LoginForm = () => {
   });
 
   const defaultValues = {
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   };
@@ -63,8 +65,12 @@ const LoginForm = () => {
           <Alert severity="error">{errors.afterSubmit.message}</Alert>
         )}
 
-        <RHFTextField name={"email"} label="Email address" />
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+          <RHFTextField name={"firstName"} label="First Name" />
+          <RHFTextField name={"lastName"} label="Last Name" />
+        </Stack>
 
+        <RHFTextField name={"email"} label="Email" />
         <RHFTextField
           name={"password"}
           label="Password"
@@ -83,40 +89,28 @@ const LoginForm = () => {
             ),
           }}
         />
-      </Stack>
 
-      <Stack alignItems={"flex-end"} sx={{ my: 2 }}>
-        <Link
-          sx={{ cursor: "pointer" }}
-          variant="body2"
-          color={"inherit"}
-          underline="always"
-          component={RouterLink}
-          to="/auth/reset-password"
-        >
-          Forgot Password?
-        </Link>
-      </Stack>
-      <Button
-        fullWidth
-        color="inherit"
-        size="large"
-        type="submit"
-        sx={{
-          bgcolor: "text.primary",
-          color: (theme) =>
-            theme.palette.mode === "light" ? "common.white" : "grey.800",
-          "&:hover": {
+        <Button
+          fullWidth
+          color="inherit"
+          size="large"
+          type="submit"
+          sx={{
             bgcolor: "text.primary",
             color: (theme) =>
               theme.palette.mode === "light" ? "common.white" : "grey.800",
-          },
-        }}
-      >
-        Login
-      </Button>
+            "&:hover": {
+              bgcolor: "text.primary",
+              color: (theme) =>
+                theme.palette.mode === "light" ? "common.white" : "grey.800",
+            },
+          }}
+        >
+          Create Account
+        </Button>
+      </Stack>
     </FormProvider>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
