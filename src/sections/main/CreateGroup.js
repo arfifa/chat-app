@@ -89,7 +89,6 @@ const CreateGroup = ({ open, handleClose }) => {
     <Dialog
       fullWidth
       open={open}
-      onClose={handleClose}
       TransitionComponent={Transition}
       keepMounted
       sx={{
