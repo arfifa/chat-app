@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { Gear } from "phosphor-react";
 import { faker } from "@faker-js/faker";
+import { useNavigate } from "react-router-dom";
 // custom component
 import AntSwitch from "../../components/AntSwitch";
 
@@ -21,9 +22,38 @@ import { Nav_Buttons, Profile_Menu } from "../../data";
 // Hooks
 import useSettings from "../../hooks/useSettings";
 
+const getPath = (index) => {
+  switch (index) {
+    case 0:
+      return "/app";
+    case 1:
+      return "/group";
+    case 2:
+      return "/call";
+    case 3:
+      return "/settings";
+    default:
+      break;
+  }
+};
+
+const getMenuPath = (index) => {
+  switch (index) {
+    case 0:
+      return "/profile";
+    case 1:
+      return "/settings";
+    case 2:
+      // TODO => Update token & set isAuth = false
+      return "/auth/login";
+    default:
+      break;
+  }
+};
+
 const SideBar = () => {
   const theme = useTheme();
-
+  const navigate = useNavigate();
   const { onToggleMode } = useSettings();
 
   const [selected, setSelected] = useState(0);
@@ -100,6 +130,7 @@ const SideBar = () => {
                   key={el.index}
                   onClick={() => {
                     setSelected(el.index);
+                    navigate(getPath(el.index));
                   }}
                 >
                   {el.icon}
@@ -134,6 +165,7 @@ const SideBar = () => {
                 }}
                 onClick={() => {
                   setSelected(3);
+                  navigate(getPath(3));
                 }}
               >
                 <Gear />
@@ -170,9 +202,10 @@ const SideBar = () => {
             }}
           >
             <Stack spacing={1} px={1}>
-              {Profile_Menu.map((el) => (
+              {Profile_Menu.map((el, idx) => (
                 <MenuItem onClick={handleClick}>
                   <Stack
+                    onClick={() => navigate(getMenuPath(idx))}
                     sx={{ width: 100 }}
                     direction={"row"}
                     alignItems={"center"}

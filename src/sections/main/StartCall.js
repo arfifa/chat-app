@@ -37,17 +37,17 @@ const StartCall = ({ open, handleClose }) => {
           backgroundColor: (theme) =>
             theme.palette.mode === "light"
               ? "#f8faff"
-              : theme.palette.background.default,
-          p: 2,
+              : theme.palette.background.neutral,
+          p: 1,
         },
       }}
     >
       {/* Title  */}
-      <DialogTitle sx={{ mb: 2 }}>Start Call</DialogTitle>
+      <DialogTitle sx={{ mb: 3 }}>Start Call</DialogTitle>
       {/* Content  */}
       <DialogContent>
-        <Stack spacing={3}>
-          <Stack sx={{ width: "100%" }} spacing={2}>
+        <Stack spacing={4}>
+          <Stack sx={{ width: "100%" }}>
             <Search>
               <SearchIconWrapper>
                 <MagnifyingGlass color="#709CE6" />
