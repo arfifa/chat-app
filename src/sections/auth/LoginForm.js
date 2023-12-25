@@ -15,8 +15,13 @@ import { Eye, EyeSlash } from "phosphor-react";
 // custom component
 import FormProvider from "../../components/hook-form/FormProvider";
 import { RHFTextField } from "../../components/hook-form";
+// Redux
+import { LoginUser } from "../../redux/slices/auth";
+import { useDispatch } from "react-redux";
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
@@ -46,6 +51,7 @@ const LoginForm = () => {
   const onSubmit = async (data) => {
     try {
       // submit data to Backend
+      dispatch(LoginUser(data));
     } catch (error) {
       console.log(error);
       reset();
