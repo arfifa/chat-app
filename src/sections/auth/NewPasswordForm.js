@@ -10,25 +10,32 @@ import {
   Stack,
 } from "@mui/material";
 import { Eye, EyeSlash } from "phosphor-react";
+import { useSearchParams } from "react-router-dom";
 // custom component
 import FormProvider from "../../components/hook-form/FormProvider";
 import { RHFTextField } from "../../components/hook-form";
+// redux
+import { useDispatch } from "react-redux";
+import { NewPassword } from "../../redux/slices/auth";
 
 const NewPasswordForm = () => {
+  const dispatch = useDispatch();
+  const [queryParameters] = useSearchParams();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const NewPasswordSchema = Yup.object().shape({
-    newPassword: Yup.string()
+    password: Yup.string()
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),
-    confirmPassword: Yup.string()
+    passwordConfirm: Yup.string()
       .required("Confirm password is required")
-      .oneOf([Yup.ref("newPassword"), null], "Password must match"),
+      .oneOf([Yup.ref("password"), null], "Password must match"),
   });
 
   const defaultValues = {
-    newPassword: "",
-    confirmPassword: "",
+    password: "",
+    passwordConfirm: "",
   };
 
   const methods = useForm({
@@ -46,6 +53,12 @@ const NewPasswordForm = () => {
   const onSubmit = async (data) => {
     try {
       // submit data to Backend
+      dispatch(
+        NewPassword({
+          ...data,
+          token: queryParameters.get("token"),
+        })
+      );
     } catch (error) {
       console.log(error);
       reset();
@@ -64,7 +77,7 @@ const NewPasswordForm = () => {
         )}
 
         <RHFTextField
-          name={"newPassword"}
+          name={"password"}
           label="New Password"
           type={showPassword ? "text" : "password"}
           InputProps={{
@@ -83,7 +96,7 @@ const NewPasswordForm = () => {
         />
 
         <RHFTextField
-          name={"confirmPassword"}
+          name={"passwordConfirm"}
           label="Confirm Password"
           type={"password"}
         />

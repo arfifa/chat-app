@@ -21,6 +21,9 @@ import Logo from "../../assets/Images/logo.ico";
 import { Nav_Buttons, Profile_Menu } from "../../data";
 // Hooks
 import useSettings from "../../hooks/useSettings";
+// redux
+import { useDispatch } from "react-redux";
+import { LogoutUser } from "../../redux/slices/auth";
 
 const getPath = (index) => {
   switch (index) {
@@ -54,6 +57,8 @@ const getMenuPath = (index) => {
 const SideBar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const { onToggleMode } = useSettings();
 
   const [selected, setSelected] = useState(0);
@@ -203,9 +208,15 @@ const SideBar = () => {
           >
             <Stack spacing={1} px={1}>
               {Profile_Menu.map((el, idx) => (
-                <MenuItem onClick={handleClick}>
+                <MenuItem
+                  onClick={() => {
+                    if (idx === 2) {
+                      return dispatch(LogoutUser());
+                    }
+                    navigate(getMenuPath(idx));
+                  }}
+                >
                   <Stack
-                    onClick={() => navigate(getMenuPath(idx))}
                     sx={{ width: 100 }}
                     direction={"row"}
                     alignItems={"center"}
