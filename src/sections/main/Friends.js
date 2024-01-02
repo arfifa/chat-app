@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
 import { Dialog, DialogContent, Slide, Stack, Tab, Tabs } from "@mui/material";
+// custom components
+import {
+  FriendElement,
+  FriendRequestElement,
+  UserElement,
+} from "../../components/UserElement";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -24,7 +30,7 @@ const UsersList = () => {
   return (
     <>
       {users.map((el, idx) => (
-        <></>
+        <UserElement key={idx} {...el} />
       ))}
     </>
   );
@@ -42,7 +48,7 @@ const FriendsList = () => {
   return (
     <>
       {friends.map((el, idx) => (
-        <></>
+        <FriendElement key={idx} {...el} />
       ))}
     </>
   );
@@ -60,7 +66,7 @@ const RequestsList = () => {
   return (
     <>
       {friendRequests.map((el, idx) => (
-        <></>
+        <FriendRequestElement key={idx} {...el.sender} id={el._id} />
       ))}
     </>
   );

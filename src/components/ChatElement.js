@@ -4,8 +4,14 @@ import { faker } from "@faker-js/faker";
 // custom components
 import StyledBadge from "./StyledBadge";
 
+// redux
+import { useDispatch } from "react-redux";
+import { SelectConversation } from "../redux/slices/app";
+
 const ChatElement = ({ id, name, img, msg, time, unread, online }) => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+
   return (
     <Box
       sx={{
@@ -17,6 +23,9 @@ const ChatElement = ({ id, name, img, msg, time, unread, online }) => {
             : theme.palette.background.paper,
       }}
       p={2}
+      onClick={() => {
+        dispatch(SelectConversation({ room_id: id }));
+      }}
     >
       <Stack
         direction={"row"}
