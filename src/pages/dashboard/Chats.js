@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   IconButton,
@@ -23,13 +23,27 @@ import {
 } from "../../components/Search";
 import ChatElement from "../../components/ChatElement";
 import Friends from "../../sections/main/Friends";
-// data const
-import { ChatList } from "../../data";
+// utils
+import { socket } from "../../socket";
+// redux
+import { useSelector } from "react-redux";
+
+const user_id = window.localStorage.getItem("user_id");
 
 const Chats = () => {
   const theme = useTheme();
 
+  const { conversations } = useSelector(
+    (state) => state.conversation.direct_chat
+  );
+
   const [openDialog, setOpenDialog] = useState(false);
+
+  useEffect(() => {
+    socket.emit("get_direct_conversations", { user_id }, (data) => {
+      // data => liste of conversations
+    });
+  }, []);
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
@@ -87,21 +101,23 @@ const Chats = () => {
           </Stack>
           <Stack direction={"column"} sx={{ flexGrow: 1, height: "100%" }}>
             <SimpleBarStyle timeout={500} clickOnTrack={false}>
-              <Stack spacing={2.4}>
+              {/* <Stack spacing={2.4}>
                 <Typography variant="subtitle2" sx={{ color: "#676767" }}>
                   Pinned
                 </Typography>
                 {ChatList.filter((el) => el.pinned).map((el) => (
                   <ChatElement {...el} />
                 ))}
-              </Stack>
+              </Stack> */}
               <Stack mt={3} spacing={2.4}>
                 <Typography variant="subtitle2" sx={{ color: "#676767" }}>
                   All Charts
                 </Typography>
-                {ChatList.filter((el) => !el.pinned).map((el) => (
-                  <ChatElement {...el} />
-                ))}
+                {conversations
+                  .filter((el) => !el.pinned)
+                  .map((el) => (
+                    <ChatElement {...el} />
+                  ))}
               </Stack>
             </SimpleBarStyle>
           </Stack>

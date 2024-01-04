@@ -1,7 +1,7 @@
 import React from "react";
 import {
   Avatar,
-  Badge,
+  Box,
   Button,
   IconButton,
   Stack,
@@ -15,14 +15,15 @@ import StyledBadge from "./StyledBadge";
 // utils
 import { socket } from "../socket";
 
-const StyledChatBox = styled(Badge)(({ theme }) => ({
+const user_id = window.localStorage.getItem("user_id");
+
+const StyledChatBox = styled(Box)(({ theme }) => ({
   "&:hover": {
     cursor: "pointer",
   },
 }));
 
 const UserElement = ({ img, firstName, lastName, online, _id }) => {
-  const user_id = window.localStorage.getItem("user_id");
   const theme = useTheme();
 
   const name = `${firstName} ${lastName}`;
@@ -164,7 +165,7 @@ const FriendElement = ({ img, firstName, lastName, online, _id }) => {
           <IconButton
             onClick={() => {
               // start a new Conversation
-              // socket.emit("start_conversation");
+              socket.emit("start_conversation", { to: _id, from: user_id });
             }}
           >
             <Chat />
